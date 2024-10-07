@@ -5,22 +5,29 @@ const resetButton = document.getElementById('resetButton');
 
 const mainElement = document.querySelector('main');
 
+const setValues = (fontSize, bgColor) => {
+  selectFontSize.value = fontSize;
+  selectBgcolor.value = bgColor;
+  mainElement.style.fontSize = fontSize;
+  mainElement.style.backgroundColor = bgColor;
+};
+
 const initialSetup = () => {
   const bgColor = localStorage.getItem('bgColor');
   const fontSize = localStorage.getItem('fontSize');
 
-  if (selectedBgColor && selectedFontsize) {
-    selectFontSize.value = fontSize;
-    selectBgcolor.value = bgColor;
-    mainElement.style.fontSize = fontSize;
-    mainElement.style.backgroundColor = bgColor;
+  if (bgColor && fontSize) {
+    setValues(fontSize, bgColor);
   }
 
-  if (!selectedBgColor && selectedFontsize) {
-    selectFontSize.value = fontSize;
-    selectBgcolor.value = bgColor;
-    mainElement.style.fontSize = fontSize;
-    mainElement.style.backgroundColor = bgColor;
+  if (!bgColor && !fontSize) {
+    setValues('16px', 'aqua');
+  }
+  if (!bgColor && fontSize) {
+    setValues(fontSize, 'aqua');
+  }
+  if (bgColor && !fontSize) {
+    setValues('16px', bgColor);
   }
 };
 
@@ -42,6 +49,7 @@ const changeBgcolor = event => {
 const clearLocalStorage = () => {
   localStorage.removeItem('bgColor');
   localStorage.removeItem('fontSize');
+  setValues('16px', 'aqua');
 };
 
 varName.addEventListener('change', changeFontSize);
